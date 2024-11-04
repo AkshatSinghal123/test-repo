@@ -155,6 +155,23 @@ Resources:
                   - "secretsmanager:DescribeSecret"
                   - "secretsmanager:ListSecrets"
                 Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - "ec2:DescribeAccountAttributes"
+                  - "ec2:DescribeRegions"
+                  - "ec2:DescribeInstances"
+                  - "elasticloadbalancing:DescribeLoadBalancers"
+                  - "elasticloadbalancing:DescribeTargetGroups"
+                  - "elasticloadbalancing:DescribeListeners"
+                  - "elasticloadbalancing:DescribeRules"
+                  - "elasticloadbalancing:DescribeTags"
+                Resource: "*"
+              - Effect: "Allow"
+                Action: "iam:CreateServiceLinkedRole"
+                Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing"
+                Condition:
+                  StringEquals:
+                    "iam:AWSServiceName": "elasticloadbalancing.amazonaws.com"
 
 Outputs:
   OidcRoleArn:
