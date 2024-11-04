@@ -19,6 +19,8 @@ Resources:
                 - "ecs-tasks.amazonaws.com"
                 - "s3.amazonaws.com"
             Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
       Policies:
         - PolicyName: "ECRFullAccessPolicy"
           PolicyDocument:
@@ -181,10 +183,10 @@ Resources:
       Protocol: HTTP
       TargetType: ip
       HealthCheckProtocol: HTTP
-      HealthCheckPath: "/"  # Ensure this matches an available endpoint
+      HealthCheckPath: "/"
       HealthCheckIntervalSeconds: 30
       HealthCheckTimeoutSeconds: 5
-      HealthyThresholdCount: 3  # Reduced to make health check less strict
+      HealthyThresholdCount: 3
       UnhealthyThresholdCount: 5
       Matcher:
         HttpCode: '200'
@@ -264,7 +266,7 @@ Resources:
       TaskDefinition: !Ref ECSTaskDefinition
       DesiredCount: 1
       LaunchType: FARGATE
-      HealthCheckGracePeriodSeconds: 60  # Allows time for application to initialize
+      HealthCheckGracePeriodSeconds: 60
       LoadBalancers:
         - ContainerName: fastapi-container
           ContainerPort: 8000
