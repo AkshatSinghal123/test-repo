@@ -53,6 +53,12 @@ This README provides instructions to set up and deploy the FastAPI application u
    - Build and push the Docker image to Amazon ECR.
    - Deploy the CloudFormation stack, creating necessary infrastructure and deploying the application.
 
+## If you face error like this
+Resource handler returned message: "Invalid request provided: CreateService error: Unable to assume the service linked role. Please verify that the ECS service linked role exists. (Service: AmazonECS; Status Code: 400; Error Code: InvalidParameterException; Request ID: 45c7c953-0fbd-4464-a27d-4857feb6f0dc; Proxy: null)" (RequestToken: b2ad1dd8-2fb9-513b-527d-e053cec44318, HandlerErrorCode: InvalidRequest)
+
+Run the command on aws cli : 
+--> aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com
+
 ## Testing the Application
 
 To test the deployed application, use `curl` to upload a CSV file:
