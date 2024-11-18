@@ -13,8 +13,15 @@ import pandas as pd
 import requests
 import uuid
 from os import environ
+from fastapi.openapi.docs import get_swagger_ui_html
 
-app = FastAPI()
+app = FastAPI(
+    title="Audio Generation API",
+    description="An API to upload CSVs, generate SSML, and convert it to audio using Azure TTS and S3 integration.",
+    version="1.0",
+    docs_url=None,  # Disable the default Swagger UI
+    redoc_url=None,  # Disable the default ReDoc UI
+)
 
 # Fetch environment variables for AWS resources
 S3_BUCKET_NAME = environ.get('S3_BUCKET_NAME')
@@ -46,6 +53,15 @@ S3_AUDIO_FOLDER = "audio/"
 
 # Set up templates folder for serving HTML files
 templates = Jinja2Templates(directory="templates")
+
+# Custom Swagger route
+@app.get("/swagger", include_in_schema=False)
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+        openapi_url="/openapi.json",
+        title="Audio Generation API - Swagger UI",
+        swagger_favicon_url=None,  # Optional: Add custom favicon
+    )
 
 # Serve the index.html file as the homepage
 @app.get("/", response_class=HTMLResponse)
