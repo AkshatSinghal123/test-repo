@@ -53,18 +53,39 @@ This README provides instructions to set up and deploy the FastAPI application u
    - Build and push the Docker image to Amazon ECR.
    - Deploy the CloudFormation stack, creating necessary infrastructure and deploying the application.
 
-## If you face error like this
-Resource handler returned message: "Invalid request provided: CreateService error: Unable to assume the service linked role. Please verify that the ECS service linked role exists. (Service: AmazonECS; Status Code: 400; Error Code: InvalidParameterException; Request ID: 45c7c953-0fbd-4464-a27d-4857feb6f0dc; Proxy: null)" (RequestToken: b2ad1dd8-2fb9-513b-527d-e053cec44318, HandlerErrorCode: InvalidRequest)
+## Accessing the Swagger Documentation
 
-Run the command on aws cli : 
---> aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com
+After deployment, you can access the Swagger UI for your FastAPI application using your **Application Load Balancer (ALB)** DNS name:
+
+```bash
+http://<your-alb-dns-link>/swagger
+```
+
+Replace `<your-alb-dns-link>` with the DNS of your Application Load Balancer.
+
+The Swagger UI allows you to explore and interact with the API endpoints directly from your browser.
+
+## Troubleshooting
+
+### ECS Service-Linked Role Error
+
+If you encounter the following error:
+```
+Resource handler returned message: "Invalid request provided: CreateService error: Unable to assume the service linked role. Please verify that the ECS service linked role exists. (Service: AmazonECS; Status Code: 400; Error Code: InvalidParameterException; Request ID: 45c7c953-0fbd-4464-a27d-4857feb6f0dc; Proxy: null)" (RequestToken: b2ad1dd8-2fb9-513b-527d-e053cec44318, HandlerErrorCode: InvalidRequest)
+```
+
+Run the following command using AWS CLI to create the ECS service-linked role:
+
+```bash
+aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com
+```
 
 ## Testing the Application
 
 To test the deployed application, use `curl` to upload a CSV file:
 
 ```bash
-curl -X POST <your-alb-dns-link>/upload-csv/ -F "file=@sample_hi-IN.csv" -F "source=hi-IN"
+curl -X POST http://<your-alb-dns-link>/upload-csv/ -F "file=@sample_hi-IN.csv" -F "source=hi-IN"
 ```
 
 Replace `<your-alb-dns-link>` with the DNS of your Application Load Balancer.
@@ -72,7 +93,3 @@ Replace `<your-alb-dns-link>` with the DNS of your Application Load Balancer.
 ## Notes
 
 - Run tests to ensure successful deployment in the target environment.
-
----
-
-This README now includes the updated trust relationship configuration, allowing for dynamic fetching of account details while specifying only the GitHub organization and repository name.
