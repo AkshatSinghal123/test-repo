@@ -1,5 +1,5 @@
 
-# FastAPI Deployment Pipeline
+# FastAPI Deployment Pipelines
 
 This README provides instructions to set up and deploy the FastAPI application using GitHub Actions and AWS resources.
 
