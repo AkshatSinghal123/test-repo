@@ -92,4 +92,4 @@ Replace `<your-alb-dns-link>` with the DNS of your Application Load Balancer.
 
 ## Notes
 
-- Run tests to ensure successful deployment in the target environment.
+- Run tests to ensure successful deployment in the target environment. Easily
