@@ -53,7 +53,7 @@ This README provides instructions to set up and deploy the FastAPI application u
    - Build and push the Docker image to Amazon ECR.
    - Deploy the CloudFormation stack, creating necessary infrastructure and deploying the application.
 
-## Accessing the Swagger Documentation
+## Accessing the Swagger Documentations
 
 After deployment, you can access the Swagger UI for your FastAPI application using your **Application Load Balancer (ALB)** DNS name:
 
